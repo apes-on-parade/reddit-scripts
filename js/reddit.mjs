@@ -2,8 +2,7 @@ export default async function Reddit(doc,storage){
 
 	// Remove potentially sensitive token from hash as soon as possible to prevent potentially leaking it
 	const hash = new URLSearchParams(doc.location.hash.replace(/^#/,''))
-	const hashToken = hash.get("token")
-	if(hashToken){
+	if(hash.get("access_token")){
 		doc.location.replace("#") //Clear hash
 		}
 
@@ -17,15 +16,25 @@ export default async function Reddit(doc,storage){
 		}
 
 	// OAuth handling
-	if(hashToken){
-		storage.setItem("token",token)
+	if(hash.get("access_token")){
+		if(hash.get("state") != storage.getItem("latestState")){
+			alert('Auth state out of sync. Perhaps you started auth from another window.')
+			}
+		else{
+			storage.setItem("auth",JSON.stringify({
+				token: hash.get("access_token"),
+				expires: Date.now() + 1000*hash.get("expires_in")
+				}))
+			}
 		}
-	const token = hashToken || storage.getItem("token")
-	if(!token){
+	const auth = storage.getItem("auth")
+	if(!auth || !auth.token || !auth.expires || expires<Date.now() ){
+		const state = Math.random().toString(16).slice(2,8)
+		session.setItem("latestState",state)
 		const redirectUri = `https://${config.ownDomain}${config.ownPath}`
 		const oauthInitUrl = 'https://www.reddit.com/api/v1/authorize?'+ (new URLSearchParams({
 			response_type:"token",
-			state:"0",
+			state: state,
 			client_id: config.redditAppId,
 			scope: config.scope,
 			redirect_uri: redirectUri
