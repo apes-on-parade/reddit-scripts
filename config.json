@@ -1,4 +1,5 @@
 {
-	"verifyOwnDomain":"apes-on-parade.github.io"
-
+	"ownDomain":"apes-on-parade.github.io",
+	"ownPath":"/reddit-scripts",
+	"redditAppId":"et3huOQgOFCl_gawoad5uw"
 }

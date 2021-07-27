@@ -1,3 +1,9 @@
-import reddit from './js/reddit.mjs'
+import Reddit from './js/reddit.mjs'
+import script from './js/script.mjs'
 
-reddit()
+main()
+
+async function main(){
+	const reddit = await Reddit(document,sessionStorage)
+	script(reddit)
+	}
