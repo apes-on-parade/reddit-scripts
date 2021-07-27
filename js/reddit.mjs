@@ -30,7 +30,7 @@ export default async function Reddit(doc,storage){
 			scope: config.scope,
 			redirect_uri: redirectUri
 			}))
-		doc.location.push(oauthInitUrl)
+		doc.location.assign(oauthInitUrl)
 		return
 		}
 
