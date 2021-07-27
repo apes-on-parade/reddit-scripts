@@ -30,7 +30,7 @@ export default async function Reddit(doc,storage){
 	const auth = storage.getItem("auth")
 	if(!auth || !auth.token || !auth.expires || expires<Date.now() ){
 		const state = Math.random().toString(16).slice(2,8)
-		session.setItem("latestState",state)
+		storage.setItem("latestState",state)
 		const redirectUri = `https://${config.ownDomain}${config.ownPath}`
 		const oauthInitUrl = 'https://www.reddit.com/api/v1/authorize?'+ (new URLSearchParams({
 			response_type:"token",
@@ -43,5 +43,5 @@ export default async function Reddit(doc,storage){
 		return
 		}
 
-	return token
+	return auth
 	}
