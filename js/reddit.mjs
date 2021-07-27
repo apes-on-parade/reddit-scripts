@@ -1,7 +1,7 @@
 export default async function Reddit(doc,storage){
 
 	// Remove potentially sensitive token from hash as soon as possible to prevent potentially leaking it
-	const hash = new URLSearchParameters(doc.location.hash.replace(/^#/,''))
+	const hash = new URLSearchParams(doc.location.hash.replace(/^#/,''))
 	const hashToken = hash.get("token")
 	if(hashToken){
 		doc.location.replace("#") //Clear hash
@@ -23,7 +23,7 @@ export default async function Reddit(doc,storage){
 	const token = hashToken || storage.getItem("token")
 	if(!token){
 		const redirectUri = `https://${config.ownDomain}${config.ownPath}`
-		const oauthInitUrl = 'https://www.reddit.com/api/v1/authorize?'+ (new URLSearchParameters({
+		const oauthInitUrl = 'https://www.reddit.com/api/v1/authorize?'+ (new URLSearchParams({
 			response_type:"token",
 			state:"0",
 			client_id: config.redditAppId,
