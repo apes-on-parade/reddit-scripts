@@ -1,5 +1,6 @@
 {
 	"ownDomain":"apes-on-parade.github.io",
 	"ownPath":"/reddit-scripts/",
-	"redditAppId":"et3huOQgOFCl_gawoad5uw"
+	"redditAppId":"et3huOQgOFCl_gawoad5uw",
+	"scope":"read,modmail,modcontributors"
 }
